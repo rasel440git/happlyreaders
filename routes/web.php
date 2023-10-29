@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\Backend\BackEndController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +21,24 @@ use App\Http\Controllers\Frontend\FrontendController;
 //     return view('welcome');
 // });
 
-//https://www.youtube.com/watch?v=Vj-328D4r9c&list=PLNtnJysLIhseqB7b6U-cRLrvCbWRwYyiZ
-Route::get("/", [FrontendController::class,"index"])->name("front.index");
-Route::get("single-post", [FrontendController::class,"single"])->name("front.single");
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
+//https://www.youtube.com/watch?v=rqtcGn3eO6k&list=PLNtnJysLIhseqB7b6U-cRLrvCbWRwYyiZ&index=2
+
+Route::get('/', [FrontendController::class,'index'])->name('front.index');
+Route::get('single-post', [FrontendController::class,'single'])->name('front.single');
+
+Route::group(['prefix'=> 'dashboard'], function () {
+Route::get('/', [BackEndController::class,'index'])->name('front.back');
+
+}); 
+
+
+require __DIR__.'/auth.php';
