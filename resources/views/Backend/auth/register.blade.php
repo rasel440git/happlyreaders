@@ -18,7 +18,6 @@
 
     {!! Form::submit('Submit', ['type'=>'submit', 'class' => 'form-control btn btn-outline-info btn-md mt-3']) !!}
 {!! Form::close() !!}
-    <p class="mt-2">Forget Password?<a href="{{route('password.request')}}"> Reset here?</a></p>
     <p>Already a member?<a href="{{route('login')}}"> Login here..</a></p>
 
 

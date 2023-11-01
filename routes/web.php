@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\FrontendController;
@@ -36,7 +37,9 @@ Route::get('/', [FrontendController::class,'index'])->name('front.index');
 Route::get('single-post', [FrontendController::class,'single'])->name('front.single');
 
 Route::group(['prefix'=> 'dashboard'], function () {
-Route::get('/', [BackEndController::class,'index'])->name('front.back');
+    Route::get('/', [BackEndController::class,'index'])->name('front.back');
+    Route::resource('category', CategoryController::class);
+
 
 }); 
 
