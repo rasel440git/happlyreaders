@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 
 class CategoryController extends Controller
 {
@@ -12,7 +14,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::orderBy('order_by')->get();
+        return view("Backend.modules.category.index", compact("categories"));
+
     }
 
     /**
@@ -28,7 +32,21 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name'=> 'required|min:3|max:255',
+            'slug'=> 'required|min:3|max:255|unique:categories',
+            'order_by'=> 'required|numeric',
+            'status'=> 'required'
+            ]);
+
+      $category_data= $request->all();
+      $category_data['slug']= Str::slug($request->input('slug'));
+
+      category::create($category_data);
+      session()->flash('cls','Success');
+      session()->flash('msg','Category created successfully');
+      return redirect()->route('category.index');
+
     }
 
     /**

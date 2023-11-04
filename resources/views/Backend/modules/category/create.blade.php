@@ -9,11 +9,21 @@
                     <h4 class="mb-0">Create Category</h4>
                 </div>
                 <div class="card-body">
-                        {!! Form::open() !!}
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                        {!! Form::open(['route' => 'category.store', 'method' => 'post']) !!}
                         {!! Form::label('name', 'Name:') !!}
-                        {!! Form::text('name', null, ['class' => 'form-control','placeholder'=>'Enter category name here..']) !!}
+                        {!! Form::text('name', null, ['id'=>'name','class' => 'form-control','placeholder'=>'Enter category name here..']) !!}
                         {!! Form::label('slug', 'Slug',['class' =>'mt-2']) !!}
-                        {!! Form::text('slug', null, ['class' => 'form-control','placeholder'=>'Enter slug name here..']) !!}
+                        {!! Form::text('slug', null, ['id'=>'slug','class' => 'form-control','placeholder'=>'Enter slug name here..']) !!}
                         {!! Form::label('order_by', 'Category Serial',['class' =>'mt-2']) !!}
                         {!! Form::number('order_by', null, ['class' => 'form-control','placeholder'=>'Enter slug name here..']) !!}
                         {!! Form::label('status', 'Category Status',['class' =>'mt-2']) !!}
@@ -24,8 +34,17 @@
                 </div>
                 
             </div>
-        </div>
-        
-        
+        </div>         
     </div>
+    @push('js')
+        <script>
+            $('#name').on('input', function () {
+                let name= $(this).val()
+                let slug= name.replaceAll(' ','-')
+                $('#slug').val(slug.toLowerCase());
+            })
+        </script>
+    @endpush
+   
+
 @endsection
