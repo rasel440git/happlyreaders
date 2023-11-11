@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Backend\BackEndController;
@@ -39,6 +40,8 @@ Route::get('single-post', [FrontendController::class,'single'])->name('front.sin
 Route::group(['prefix'=> 'dashboard'], function () {
     Route::get('/', [BackEndController::class,'index'])->name('front.back');
     Route::resource('category', CategoryController::class);
+    Route::resource('tag', TagController::class);
+
 
 
 }); 

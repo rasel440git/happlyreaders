@@ -43,7 +43,7 @@ class CategoryController extends Controller
       $category_data['slug']= Str::slug($request->input('slug'));
 
       category::create($category_data);
-      session()->flash('cls','Success');
+      session()->flash('cls','success');
       session()->flash('msg','Category created successfully');
       return redirect()->route('category.index');
 
@@ -54,7 +54,8 @@ class CategoryController extends Controller
      */
     public function show(category $category)
     {
-        //
+        return view("Backend.modules.category.show", compact("category"));
+        
     }
 
     /**
@@ -62,7 +63,8 @@ class CategoryController extends Controller
      */
     public function edit(category $category)
     {
-        //
+        return view("Backend.modules.category.edit", compact("category"));
+        
     }
 
     /**
@@ -70,7 +72,20 @@ class CategoryController extends Controller
      */
     public function update(Request $request, category $category)
     {
-        //
+        $this->validate($request, [
+            'name'=> 'required|min:3|max:255',
+            'slug'=> 'required|min:3|max:255|unique:categories,slug,'.$category->id,
+            'order_by'=> 'required|numeric',
+            'status'=> 'required'
+            ]);
+
+      $category_data= $request->all();
+      $category_data['slug']= Str::slug($request->input('slug'));
+
+      $category->update($category_data);
+      session()->flash('cls','info');
+      session()->flash('msg','Category Updated successfully');
+      return redirect()->route('category.index');
     }
 
     /**
@@ -78,6 +93,9 @@ class CategoryController extends Controller
      */
     public function destroy(category $category)
     {
-        //
+        $category->delete();
+        session()->flash('cls','error');
+        session()->flash('msg','Category Deleted successfully');
+      return redirect()->route('category.index');
     }
 }
