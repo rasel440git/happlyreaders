@@ -1,12 +1,12 @@
 @extends('Backend.layouts.master')
-@section('page_title','Category')
+@section('page_title','Tag')
 @section('page_sub_title','Create')
 @section('cart')
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="mb-0">Create Category</h4>
+                    <h4 class="mb-0">Create Tag</h4>
                 </div>
                 <div class="card-body">
 
@@ -19,12 +19,12 @@
                         </ul>
                     </div>
                 @endif
-                        {!! Form::open(['route' => 'category.store', 'method' => 'post']) !!}
-                        @include('Backend.modules.category.form')
+                        {!! Form::open(['route' => 'tag.store', 'method' => 'post']) !!}
+                        @include('Backend.modules.tag.form')
 
-                        {!! Form::button('Create Category', ['type'=>'submit', 'class' => 'form-control btn btn-outline-info btn-md mt-3']) !!}
+                        {!! Form::button('Create Tag', ['type'=>'submit', 'class' => 'form-control btn btn-outline-info btn-md mt-3']) !!}
                         {!! Form::close() !!}   
-                        <a href="{{route('category.index')}}"><button class=" btn btn-primary btn-sm mt-2">Back</button> </a>                
+                        <a href="{{route('tag.index')}}"><button class=" btn btn-primary btn-sm mt-2">Back</button> </a>                
 
                 </div>
                 
