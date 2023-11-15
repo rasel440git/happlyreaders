@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -52,6 +54,7 @@ class TagController extends Controller
      */
     public function show(Tag $tag)
     {
+        return view("Backend.modules.tag.show", compact("tag"));
         
     }
 
@@ -60,7 +63,8 @@ class TagController extends Controller
      */
     public function edit(Tag $tag)
     {
-        //
+        return view("Backend.modules.tag.edit", compact("tag"));
+        
     }
 
     /**
@@ -68,7 +72,20 @@ class TagController extends Controller
      */
     public function update(Request $request, Tag $tag)
     {
-        //
+        $this->validate($request, [
+            'name'=> 'required|min:3|max:255',
+            'slug'=> 'required|min:3|max:255|unique:tags,slug,'.$tag->id,
+            'order_by'=> 'required|numeric',
+            'status'=> 'required'
+            ]);
+
+      $tag_data= $request->all();
+      $tag_data['slug']= Str::slug($request->input('slug'));
+
+      $tag->update($tag_data);
+      session()->flash('cls','info');
+      session()->flash('msg','Tag Updated successfully');
+      return redirect()->route('tag.index');
     }
 
     /**
@@ -76,6 +93,9 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        $tag->delete();
+        session()->flash('cls','error');
+        session()->flash('msg','Tag Deleted successfully');
+      return redirect()->route('tag.index');
     }
 }
