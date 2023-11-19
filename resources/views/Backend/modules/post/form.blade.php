@@ -14,7 +14,7 @@
         <div class="col-md-6">
          {!! Form::label('sub_category_id', 'Select Sub Category',['class' =>'mt-2']) !!}
          <select name="sub_category_id" class ="form-select" id="sub_category_id">
-
+            <option selected="select"> Selcet Sub Category</option>
          </select>
         
     </div>
@@ -23,12 +23,13 @@
         <script>
             $('#category_id').on('change', function () {
                 let category_id = $(this).val()
-                let sub_categories
-                $('#sub_category_id').empty()
+                let sub_category_elements = $('#sub_category_id')
+                sub_category_elements.empty()
+                sub_category_elements.append('<option selected="select"> Selcet Sub Category</option>')
                 axios.get(window.location.origin+'/dashboard/get-subcategory/'+category_id).then(res=>{
-                    sub_categories= res.data
+                    let sub_categories= res.data
                     sub_categories.map((sub_category, index)=>(
-                        $('#sub_category_id').append(`<option value="${sub_category.id}">${sub_category.name}</option>`)
+                        sub_category_elements.append(`<option value="${sub_category.id}">${sub_category.name}</option>`)
                     ))
 
                 })
