@@ -16,11 +16,31 @@
          <select name="sub_category_id" class ="form-select" id="sub_category_id">
             <option selected="select"> Selcet Sub Category</option>
          </select>
-        
-    </div>
+                 
+    
+
+        </div>
+        </div class="col-md-6">
+         {!! Form::label('description', 'Description',['class' =>'form-control']) !!}
+         {!! Form::textarea('description',  null,['id'=>'description', 'class' =>'form-control']) !!}
+    <div>
+    
 
     @push('js')
+         <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.1/axios.min.js" crossorigin="anonymous"></script>
+
         <script>
+
+                            ClassicEditor
+                                .create( document.querySelector( '#description' ) )
+                                .then( editor => {
+                                        console.log( editor );
+                                } )
+                                .catch( error => {
+                                        console.error( error );
+                                } );
+
             $('#category_id').on('change', function () {
                 let category_id = $(this).val()
                 let sub_category_elements = $('#sub_category_id')
