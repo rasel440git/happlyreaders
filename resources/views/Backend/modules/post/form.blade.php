@@ -20,11 +20,33 @@
     
 
         </div>
-        </div class="col-md-6">
-         {!! Form::label('description', 'Description',['class' =>'form-control']) !!}
-         {!! Form::textarea('description',  null,['id'=>'description', 'class' =>'form-control']) !!}
-    <div>
-    
+        </div>
+            {!! Form::label('description', 'Description',['class' =>'form-control']) !!}
+            {!! Form::textarea('description',  null,['id'=>'description', 'class' =>'form-control']) !!}
+            {!! Form::label('tag_id', 'Select Tag',['class' =>'mt-2']) !!}
+            <div class="row">
+            @foreach ( $tags as $tag)
+                <div class="col-md-3">
+                {!! Form::checkbox('tag_id', $tag->id, false) !!} <span> {{$tag->name}}</span>
+
+                </div>    
+            @endforeach
+            <div class="col-md-12 ">
+                {!! Form::label('photo', 'Select Photo',['class' =>'mt-2']) !!}
+                {!! Form::file('photo', ['class' =>'form-control']) !!}
+            </div>
+            
+            </div>
+    @push('css')
+        <style>
+            .ck.ck-editor__main > .ck-editor__editable:not(.ck-focused){
+                min-height: 200px;
+            }
+            .ck.ck-editor__main > .ck-editor__editable{
+                min-height: 300px;
+            }
+        </style>
+    @endpush
 
     @push('js')
          <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
@@ -54,5 +76,13 @@
 
                 })
             })
+
+
+            $('#title').on('input', function () {
+                let name= $(this).val()
+                let slug= name.replaceAll(' ','-')
+                $('#slug').val(slug.toLowerCase());
+            })
+
         </script>
     @endpush

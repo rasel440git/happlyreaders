@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Post;
 use App\Models\category;
+use App\Models\Tag;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 
@@ -25,9 +26,9 @@ class PostController extends Controller
     public function create()
     {
         $Categories = category::pluck("name","id");
-        $sub_Categories = SubCategory::pluck("name","id");
+        $tags = Tag::select("name","id")->get();
 
-        return view("Backend.modules.post.create", compact("Categories","sub_Categories"));
+        return view("Backend.modules.post.create", compact("Categories","tags"));
         
     }
 
@@ -36,7 +37,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
