@@ -13,6 +13,19 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->string('title')->nullable;
+            $table->string('slug')->nullable;
+            $table->tinyInteger('status')->nullable()->comment('1 = publish, 0 = not publish');
+            $table->tinyInteger('is_approved')->nullable()->comment('1 = approved, 0 = not approve');
+            $table->foreignId('category_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('sub_category_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->text('description')->nullable;
+            $table->string('photo')->nullable;
+            $table->string('admin_comment')->nullable;
+            $table->softDeletes();
+
+
             $table->timestamps();
         });
     }

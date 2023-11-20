@@ -19,7 +19,7 @@
                         </ul>
                     </div>
                 @endif
-                        {!! Form::open(['route' => 'post.store', 'method' => 'post']) !!}
+                        {!! Form::open(['route' => 'post.store', 'method' => 'post', 'files'=>'true']) !!}
                         @include('Backend.modules.post.form')
 
                         {!! Form::button('Create Post', ['type'=>'submit', 'class' => 'form-control btn btn-outline-info btn-md mt-3']) !!}
