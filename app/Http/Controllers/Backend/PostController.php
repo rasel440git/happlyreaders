@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers\Backend;
 
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostCreateRequest;
+use Illuminate\Support\Facades\Auth;
 
 
 use App\Models\Post;
 use App\Models\category;
 use App\Models\Tag;
+use App\Models\User;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 
 
@@ -42,7 +46,14 @@ class PostController extends Controller
     public function store(PostCreateRequest $request)
     {
         $post_Data= $request->except(['slug','tag_ids','photo']);
-        dd($post_Data);
+        $post_Data['slug']=  str::slug($request->input('slug'));
+        $post_Data['user_id']= Auth::User()->id;
+        $post_Data['is_approved']= 1;
+        //dd($post_Data);
+        if($request->hasFile('file')){
+            $file= $request->file('photo');
+            $name= str::slug($request->input('slug'));
+        }
     }
 
     /**
