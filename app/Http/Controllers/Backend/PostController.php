@@ -45,16 +45,28 @@ class PostController extends Controller
      */
     public function store(PostCreateRequest $request)
     {
-        $post_Data= $request->except(['slug','tag_ids','photo']);
-        $post_Data['slug']=  str::slug($request->input('slug'));
-        $post_Data['user_id']= Auth::User()->id;
-        $post_Data['is_approved']= 1;
-        //dd($post_Data);
-        if($request->hasFile('file')){
-            $file= $request->file('photo');
-            $name= str::slug($request->input('slug'));
+        $post_Data = $request->except(['tag_ids', 'photo', 'slug']);
+        $post_Data['slug'] = Str::slug($request->input('slug')); // Corrected 'str' to 'Str'
+        $post_Data['user_id'] = Auth::user()->id; // Corrected 'User' to 'user'
+        $post_Data['is_approved'] = 1;
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $name = Str::slug($request->input('slug'));
+            $height = 400;
+            $width = 1000;
+            $thumb_height = 150;
+            $thumb_width = 300;
+            $path = 'images/post/original/';
+            $thumb_path = 'images/post/thumbnail/';
+
+            $post_Data['photo'] = PhotoUploadController::imageUpload($name, $height, $width, $path, $file);
+            PhotoUploadController::imageUpload($name, $thumb_height, $thumb_width, $thumb_path, $file); // Corrected 'path' to 'thumb_path'
         }
+      
     }
+       
+        
 
     /**
      * Display the specified resource.
