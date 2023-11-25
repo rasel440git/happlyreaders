@@ -10,7 +10,7 @@ class PhotoUploadController extends Controller
 {
     public static function imageUpload($name, $height,$width, $path, $file){
         $image_name= $name.'.webp';
-        Image::make ($image_name)->fit($width,$height)->save(public_path($path).$image_name,'webp');
+        Image::make ($file)->fit($width, $height)->save(public_path($path).$image_name,50,'webp');
         return $image_name;
   
     }
@@ -19,5 +19,6 @@ class PhotoUploadController extends Controller
         $image_path= public_path($path).$name;
         if(file_exists($image_path)){   
             unlink($image_path);
-    }  
+        }  
+    }
 }

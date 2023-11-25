@@ -47,7 +47,7 @@ class PostController extends Controller
     {
         $post_Data = $request->except(['tag_ids', 'photo', 'slug']);
         $post_Data['slug'] = Str::slug($request->input('slug')); // Corrected 'str' to 'Str'
-        $post_Data['user_id'] = Auth::user()->id; // Corrected 'User' to 'user'
+        $post_Data['user_id'] = Auth::User()->id; // Corrected 'User' to 'user'
         $post_Data['is_approved'] = 1;
 
         if ($request->hasFile('photo')) {
@@ -63,7 +63,9 @@ class PostController extends Controller
             $post_Data['photo'] = PhotoUploadController::imageUpload($name, $height, $width, $path, $file);
             PhotoUploadController::imageUpload($name, $thumb_height, $thumb_width, $thumb_path, $file); // Corrected 'path' to 'thumb_path'
         }
-      
+        // dd ($post_Data);
+        $post= Post::create($post_Data);
+
     }
        
         
