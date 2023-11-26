@@ -25,7 +25,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $post= Post::latest()->paginate(10);
+        dd($post);
     }
 
     /**
@@ -65,6 +66,8 @@ class PostController extends Controller
         }
         // dd ($post_Data);
         $post= Post::create($post_Data);
+        $post->tag()->attach($request->input('tag_ids'));
+
 
     }
        
