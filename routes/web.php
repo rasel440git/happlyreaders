@@ -8,6 +8,9 @@ use App\Http\Controllers\Backend\TagController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Backend\BackEndController;
+//use PHPUnit\Event\Code\testDbController;
+use App\Http\Controllers\testDbController;
+
 
 
 /*
@@ -35,6 +38,9 @@ use App\Http\Controllers\Backend\BackEndController;
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
 //https://www.youtube.com/watch?v=rqtcGn3eO6k&list=PLNtnJysLIhseqB7b6U-cRLrvCbWRwYyiZ&index=2
+
+Route::get('testdata', [testDbController::class,'getData']);
+
 
 Route::get('/', [FrontendController::class,'index'])->name('front.index');
 Route::get('single-post', [FrontendController::class,'single'])->name('front.single');
